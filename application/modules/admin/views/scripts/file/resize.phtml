@@ -1,0 +1,94 @@
+<div id="userinfo"><p>Dobrodošli, <?= $this->user->fullname ?> | <a href="<?= $this->baseUrl() ?>/admin/auth/logout">Logout</a></p></div>
+<div class="toolbar">
+	<div class="container_12" id="midsection">
+			<ul>
+
+				<!-- 
+					
+				<li class="button compress" id="zip"><a href="#">Zapakiraj</a></li>
+				<li class="separator"></li>
+				<li class="button pubarticle" id="publish"><a href='#'>Objavi izabrane</a></li>
+				<li class="button unpubarticle" id="unpublish"><a href="#">Makni izabrane</a></li> -->
+			</ul>
+	</div>
+</div>
+<script type="text/javascript">	    
+        
+     $(document).ready(function() {
+    	
+    	$("#upload").click(
+    		function(event) {
+    			$("#uploadform").animate({ height: "80px" }, "slow"); 
+    			event.preventDefault(); 
+    		}
+    	);
+    	
+    	$("#delete").click(
+    		function(event) {
+    			$("#files").attr("action", "<?= $this->baseUrl ?>/admin/file/delete");
+    			$("#files").submit(); 
+    			event.preventDefault(); 
+    		}
+    	);
+    	
+    	$("#unzip").click(
+    		function(event) {
+    			$("#files").attr("action", "<?= $this->baseUrl ?>/admin/file/unzip");
+    			$("#files").submit(); 
+    			event.preventDefault(); 
+    		}
+    	);
+    	
+    	$("#newfolder").click(
+    		function(event) {
+    			$("#folderform").animate({ height: "80px" }, "slow"); 
+    			event.preventDefault(); 
+    		}
+    	);
+    	
+    	$("#resize").click(
+    		function(event) {
+    			$("#files").attr("action", "<?= $this->baseUrl ?>/admin/file/resize");
+    			$("#files").submit(); 
+    			event.preventDefault(); 
+    		}
+    	);
+    	
+    	$("#checkall").click(function() {
+	    		ch = $("#checkall").attr("checked");	    		
+    			$(".checkcount").attr("checked", ch);
+    	});
+    	
+    });
+</script>
+
+<div class="container_12">
+	<h2>Promjena veličine slike: </h2>
+	<div class="grid_8 alpha">
+		<div class="grid_8 alpha omega" style="text-align: center">
+			
+			<img src="<?= $this->baseUrl(); ?>/uploads/slike/Trust.1_2.jpg" style="width: 100%; margin-top: 10px;"/>
+		</div>
+	</div>
+	<div class="grid_4 omega">
+		<p><?php echo $this->file; ?></p>
+		<h2>Dimenzije</h2>
+		<p>
+			<input type="text" style="width: 60px;" /> x <input type="text" style="width: 60px;" /> px<br/>
+		</p>
+		<h2>Standardne veličine</h2>
+		<p>
+			Glavni sadržaj: <a href="#">100%</a> <a href="#">50%</a> <a href="#">33%</a> <a href="#">25%</a><br/> 
+			Sidebar: <a href="#">100%</a> <a href="#">50%</a>
+		</p>
+		<h2>Informacije</h2>
+		<p>
+			<strong>Dimenzije slike:</strong> 3.000 x 2.400 pixela<br/>
+			<strong>Veličina slike:</strong> 739 KB<br/>
+			<strong>Otvaranje:</strong> ADSL: 3.5s, Modem: 147s<br/>
+			<strong>Format:</strong> JPEG interlaced, 32bit
+		</p>
+	</div>
+
+
+</div>

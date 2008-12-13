@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>/styles/master.css" type="text/css" media="screen" charset="utf-8" />
+	<link rel="stylesheet" href="<?php echo $this->baseUrl; ?>/styles/print.css" type="text/css" media="print" charset="utf-8" />
+	<script src="<?=$this->baseUrl?>/scripts/jquery-1.2.6.min.js" type="text/javascript"></script>
+	<script src="<?=$this->baseUrl?>/scripts/jquery.validate.min.js" type="text/javascript"></script>
+	<script language="javascript">AC_FL_RunContent = 0;</script>
+	<script src="<?php echo $this->baseUrl; ?>/scripts/AC_RunActiveContent.js" language="javascript"></script>
+	<title>Ljekarna Udovičić-Martinis: <?=$this->escape($this->title)?></title>
+</head>
+<body>
+<script type="text/javascript">
+
+
+	$.fn.togglemenu = function()
+	{		
+		this.siblings(".submenu").fadeOut(200);
+		this.fadeIn(200);
+		$('#menu').animate( { height: "200px" });
+	}
+	
+	var hidetimeout = null;
+	var showtimeout = null;
+	var menushown = false;
+	
+	var visibletab = 1;
+	
+	$.fn.showmenu = function(tab)
+	{
+		clearTimeout(hidetimeout); 
+		if(!menushown) 
+		{ 
+			showtimeout = setTimeout("$('#menu').animate( { height: '200px' }); menushown = true; $('#subtab"+tab+"').siblings('.submenu').hide(); $('#subtab"+tab+"').show(); menushown = true;", 200); 
+			 
+		}
+		else
+		{
+			$("#subtab"+tab).siblings('.submenu').hide(); 
+			$('#subtab'+tab).show();
+		}
+	}
+	
+
+
+	$(document).ready(function() {
+		<?php for($i = 2; $i <= $this->menucounter; $i++): ?>
+			$('#menuitem<?= $i ?>').mouseover(function() { $('#subtab<?= $i ?>').showmenu(<?= $i ?>); });
+		<?php endfor; ?>
+		$('#menu').hover(function() { clearTimeout(hidetimeout); }, function() { menushown = false; clearTimeout(showtimeout); hidetimeout = setTimeout("$('#menu').animate( { height: '35px' }); $('.submenu').fadeOut();", 500);   });
+
+	});
+	
+	$.fn.showsubmenu = function()
+	{
+		$(".sidesubmenu").hide("slow");
+		this.toggle("slow");
+	}
+</script>
+<div id="header"><div class="logo"></div><h1>Ljekarna Udovičić-Martinis</h1></div>
+<div class="border-top"></div>
+<div id="menu" style="height: 35px; min-height: 0px;">		
+		<ul id="topmenu" >
+			<li class="topitem" id="menuitem1"><a href="<?= $this->baseUrl ?>/student/"><strong>Početna</strong></a></li>
+			<?= $this->topmenu ?>
+		</ul>
+		<!--  <div id="subtab1" class="submenu" style="display: none"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras volutpat nunc lacinia dolor. Mauris enim justo, vehicula et, commodo vel, tincidunt eget, ipsum. Donec justo orci, luctus sit čamet, placerat ćeu, malesuada sit amet, libero. Duis volutpat tempor lectus. Morbi placerat malesuada nulla. Duis viverra nisl at nibh. Nam eget sem sit amet šest varius auctor. Cras sem. Ut hendrerit, libero đut porta ornare, žipsum ipsum consectetuer est, ut tristique lectus mi ac eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Quisque sit amet mauris sit amet urna bibendum faucibus. Vivamus lobortis ante quis nunc. Mauris ornare dolor ac nunc. Duis fringilla, lorem vel cursus gravida, augue augue hendrerit enim, sed imperdiet urna mauris sit amet quam.</p></div> -->
+		<?= $this->submenu ?>
+</div>
+
+<div class="border-bottom"></div>
+<?= $this->layout()->content; ?>
+<p class="clear">&nbsp;</p>
+<div class="border-top"></div>
+<p class="center whitefooter">&copy; 2008 Ljekarna Udovičić-Martinis | <a href="<?= $this->baseUrl ?>/kontakt/kako-do-nas">Kontakt</a><br/><a href="http://www.udovicic.com" class="matej">Design &amp; Development <span class="info"><br/>by Matej Udovičić</span></a></p>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-189848-3");
+pageTracker._trackPageview();
+</script>
+</body>
+</html>

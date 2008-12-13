@@ -1,0 +1,49 @@
+<div id="userinfo"><p>Dobrodošli, <?= $this->user->fullname ?> | <a href="<?= $this->baseUrl() ?>/admin/auth/logout">Logout</a></p></div>
+<div class="toolbar">
+	<div class="container_12" id="midsection">
+			<ul>
+
+			</ul>
+	</div>
+</div>
+<div class="container_12" id="midsection">
+	<div class="grid_12 alpha omega">
+		<h2>Dobrodošli, <?= $this->user->fullname ?>.</h2>
+	</div>
+</div>
+<p class="clear"></p>
+<p>&nbsp;</p>
+
+<div id="programi"> 
+	<div class="container_12" style="margin-left: auto; margin-right: auto;">
+		<form action="<?= $this->baseUrl; ?>/admin/index/savefront" method="post">
+			<div class="grid_12 alpha">
+				<h2>Uvodni tekst</h2>
+				<textarea rows="6" style="width: 100%;" name="front_intro"><?= $this->intro ?></textarea>
+			</div>
+			<div class="clear">&nbsp;</div>
+			<p>&nbsp;</p>
+			<div id="prog1" class="grid_4 alpha program">
+				<h2>Career Coaching Program</h2>
+				<a href="#"><img src="<?php echo $this->baseUrl(); ?>/images/prog1_career.jpg" /></a>
+				<p><textarea style="width: 100%; height: 80px;" name="front_career"><?= $this->career ?></textarea></p>
+				<p>Tečaj počinje: <input type="text" maxlength="6" style="width: 50px;" name="front_career_date" value="<?= $this->career_date ?>" /></p>
+			</div>
+			<div id="prog2" class="grid_4 program">
+				<h2>Self-Development Program</h2>
+				<a href="#"><img src="<?php echo $this->baseUrl(); ?>/images/prog2_selfdev.jpg" /></a>
+				<p><textarea style="width: 100%; height: 80px;" name="front_self"><?= $this->self ?></textarea></p>
+				<p>Tečaj počinje: <input type="text" maxlength="6" style="width: 50px;" name="front_self_date" value="<?= $this->self_date ?>" /></p>
+				<p>&nbsp;</p>
+				<p style="text-align: center"><input type="submit" name="submit" value="Spremi promjene" /></p>
+			</div>
+			<div id="prog3" class="grid_4 omega program">
+				<h2>Student Management Program</h2>
+				<a href="#"><img src="<?php echo $this->baseUrl(); ?>/images/prog3_student.jpg" /></a>
+				<p><textarea style="width: 100%; height: 80px;" name="front_student"><?= $this->student ?></textarea></p>
+				<p>Tečaj počinje: <input type="text" maxlength="6" style="width: 50px;" name="front_student_date" value="<?= $this->student_date ?>" /></p>
+			</div>
+		</form>
+	</div>
+	<span class="clear"></span>
+</div>

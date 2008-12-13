@@ -1,0 +1,126 @@
+<div id="messagebar"><div id="message" style="display: none"></div></div>
+<div id="userinfo"><p>Dobrodošli, <?= $this->user->fullname ?> | <a href="<?= $this->baseUrl() ?>/admin/auth/logout">Logout</a></p></div>
+<div class="toolbar">
+	<div class="container_12" id="midsection">
+			<ul>
+			<li class="button save" id="save"><a href="#">Spremi</a></li>
+			<li class="button save" id="savecont"><a href="#">Spremi i nastavi</a></li>
+			<li class="button delarticle" id="delete"><a href="#">Odustani</a></li>
+		</ul>
+	</div>
+</div>
+<div class="container_12" id="midsection">
+	<script language="javascript" type="text/javascript">
+		<?php if($this->page->id == -1): ?>
+			var lock = false; 
+		<?php else: ?>
+			var lock = true;
+		<?php endif; ?>
+		$(document).ready(function() {
+			
+			$("#title").myslug({lock: lock });
+			$("#slug").myslug({lock: lock });
+			
+			$("#lock").click( function(event) {
+				if(lock == false)
+				{
+					$("#lock").attr("src", "<?= $this->baseUrl(); ?>/images/icon_lock.png");
+					$("#lock").attr("title", "Zaključano - Moguća je samo ručna promjena sluga.");
+					lock = true;
+				}
+				else
+				{
+					$("#lock").attr("src", "<?= $this->baseUrl(); ?>/images/icon_lock_unlock.png");
+					$("#lock").attr("title", "Otključano - Promjena naslova mjenja i slug");
+					lock = false;
+				}
+			});
+			
+			$("#save").click( function () {
+				if($("#slug").attr("value") == "" ) { showMessage("Ispunite polje za slug."); return; }
+				if($("#title").attr("value") == "" ) { showMessage("Ispunite polje za naslov."); return; }
+				$("#editor").submit();
+			} );
+			
+			$("#savecont").click( function () {
+			
+				$("#continue").attr("value", "1");
+				if($("#slug").attr("value") == "" ) { showMessage("Ispunite polje za slug."); return; }
+				if($("#title").attr("value") == "" ) { showMessage("Ispunite polje za naslov."); return; }
+				$("#editor").submit();
+			} );
+			
+			$("#title").focus(function() { 
+				if($("#title").attr("value") == "Naslov") $("#title").attr("value", "");
+			 });
+			 
+			$("#title").blur(function() { 
+				if($("#title").attr("value") == "") $("#title").attr("value", "Naslov");
+			 });
+			 
+			<?php
+			if($this->messages !== NULL):
+				$message = "";	
+				foreach($this->messages as $item)
+				{
+					$message = $item;
+				}
+	
+				if($message != ""):
+				?>
+				showMessage("<?= $message ?>");
+				<?php endif; ?>
+			<?php endif; ?>
+		});
+	
+		function generateSlug(text)
+		{
+		    var text_array = text.split(" ");
+		    text = text_array.join("-");
+		    text = text.toLowerCase()
+			return text;
+		}
+	</script>
+	<?php
+
+	?>
+	<div class="grid_12">
+		<h2><?= ($this->page->id == "-1") ? "Nova stranica" : "Izmjena stranice" ?></h2>
+		<!-- <?= $this->page->parentid ?>  -->
+		<form method="post" action="<?= $this->baseUrl(); ?>/admin/page/save" class="editor" name="editor" id="editor">
+			<input type="hidden" name="id" value="<?= $this->page->id; ?>" />
+			<input type="hidden" id="continue" name="continue" value="0" />
+			<input type="hidden" id="category" name="category" value="<?= $this->page->category ?>" />
+			<input type="hidden" name="ordering" value="<?= $this->page->ordering; ?>" />
+			<input type="hidden" name="oldslug" value="<?= $this->page->slug; ?>"  />
+			<div id="content" class="grid_9 alpha">
+				<p><input type="text" name="title" id="title" class="big" value="<?= ($this->page->title != "") ? $this->page->title : "Naslov" ; ?>" /></p>
+				<p><a href="#" id="slugbutton"><img id="lock" src="<?= $this->baseUrl(); ?>/images/icon_lock<?php if($this->page->id == -1) echo "_unlock" ?>.png" title="Otključano - Promjena naslova mjenja i slug."/></a><input type="text" name="slug" id="slug" class="slug" value="<?= $this->page->slug; ?>"  /> </p>
+				<p>
+					<select name="parentid">
+						<option value="-1">Uvrsti na najvišoj razini</option>
+						<optgroup label="Uvrsti pod:" >							
+							<?php foreach($this->paths as $curpath): if($curpath["id"] == $this->page->id) continue; ?><option value="<?= $curpath["id"] ?>" <?= ($curpath["id"] == $this->page->parentid) ? 'selected="selected"' : ""; ?>><?= str_replace("/", " &raquo; ", $curpath["path"]) ?></option>
+							<?php endforeach; ?>
+						</optgroup>
+					</select>
+				</p>
+				<p><?= $this->editor ?></p>
+				<h3>Slike i attachmenti</h3>
+				<p><a href="#" onclick="$('#filelist').toggle(); return false;">Dodaj sliku ili attachment u tekst</a> | <a href="#" onclick="$('#filelist').show(0); $('#filelist').contents().find('#uploadform').animate({ height: '80px' }, 'slow'); return false;">Upload nove datoteke</a></p>
+				
+				<iframe src="<?= $this->baseUrl(); ?>/admin/file/folderclear" class="filelist" name="filelist" id="filelist" style="display: none;"></iframe>
+
+			</div>
+
+			<div class="grid_3 omega sidebar">
+				<h3>Opcije</h3>
+				<p>
+					<input type="checkbox" name="published" id="published" <?= $this->page->published ? "checked='checked'" : ""; ?> value="1" /> <label for="published">Stranica je objavljen</label><br/>
+					<input type="checkbox" name="showsub" id="showsub" <?= $this->page->showsub ? "checked='checked'" : ""; ?> value="1" /> <label for="showsub">Prikaži podelemente</label><br/>
+				</p>
+
+			</div>
+		</form>
+	</div>
+</div>
